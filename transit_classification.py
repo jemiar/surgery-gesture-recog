@@ -119,7 +119,7 @@ def create_model(height=240, width=320):
     output = layers.Dense(units=1, activation='sigmoid')(x)
 
     model = tf.keras.Model(input, output, name='3DCNN')
-    return Model
+    return model
 
 # Create model
 model = create_model(240, 320)
