@@ -29,8 +29,10 @@ class DataGenerator(tf.keras.utils.Sequence):
     # Get data by batch index
     # Call data_generation method
     def __getitem__(self, index):
+        # over all segments: iterate find the list of segments in each batch ID
         indexes = self.indexes[index*self.batch_size: (index+1)*self.batch_size]
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
+        # list_IDs_temp is a list of segment ids
         X, y = self.data_generation(list_IDs_temp)
         return X, y
 
@@ -44,8 +46,8 @@ class DataGenerator(tf.keras.utils.Sequence):
     # Generate data from list of ids
     def data_generation(self, list_IDs_temp):
         # Initialize numpy array
-        X = np.empty((self.batch_size, *self.dim, self.n_channels)) # X is one input batch
-        y = np.empty((self.batch_size), dtype=int)                  # y is the target (label) of each batch)
+        X = np.empty((self.batch_size, *self.dim, self.n_channels)) # X is the list of segments in one input batch
+        y = np.empty((self.batch_size), dtype=int)                  # y is the target (label) of each segment in the batch)
 
         # For each id, load data from folder
         for i, ID in enumerate(list_IDs_temp):
